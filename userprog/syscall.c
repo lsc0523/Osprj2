@@ -7,13 +7,12 @@
 
 static void syscall_handler (struct intr_frame *);
 
-	void
-syscall_init (void) 
+	
+void syscall_init (void) 
 {
 	intr_register_int (0x30, 3, INTR_ON, syscall_handler, "syscall");
 }
-	void
-check_vaddr(void* esp)
+void check_vaddr(void* esp)
 {
 	if(is_kernel_vaddr(esp))
 		exit(-1);
@@ -22,7 +21,7 @@ check_vaddr(void* esp)
 	static void
 syscall_handler (struct intr_frame *f UNUSED) 
 {
-	//printf("syscall : %d\n",*(uint32_t *)(f->esp));
+	printf("syscall : %d\n",*(uint32_t *)(f->esp));
 	/*printf("address : %10X\n\n",f->esp);
 	printf("f->esp+4 is %d\n\n",*(uint32_t*)(f->esp +4));
 	printf("f->esp+8 is %d\n\n",*(uint32_t*)(f->esp+8));
@@ -54,12 +53,21 @@ syscall_handler (struct intr_frame *f UNUSED)
 			f->eax=wait( (pid_t)*(uint32_t *)(f->esp + 4));
 			break;
 		case SYS_CREATE:
+			check_vaddr(f->esp+4);
+			check_vaddr(f->esp+8);
+			f->eax=create((const char*)*(uint32_t*)(f->esp+4),(unsigned)*(uint32_t*)(f->esp+8));
 			break;
 		case SYS_REMOVE:
+			check_vaddr(f->esp+4);
+			f->eax=remove((const char*)*(uint32_t*)(f->esp+4));
 			break;
 		case SYS_OPEN:
+			check_vaddr(f->esp+4);
+			f->eax=open((const char*)*(uint32_t*)(f->esp+4));
 			break;
 		case SYS_FILESIZE:
+			check_vaddr(f->esp+4);
+			f->eax=filesize((int)*(uint32_t*)(f->esp+4));
 			break;
 		case SYS_READ:
 			check_vaddr(f->esp+20);
@@ -74,10 +82,15 @@ syscall_handler (struct intr_frame *f UNUSED)
 			f->eax=write((int)*(uint32_t *)(f->esp+4), (void *)*(uint32_t *)(f->esp + 8 ), (unsigned)*((uint32_t *)(f->esp +12)));
 			break;
 		case SYS_SEEK:
+			check_vaddr(f->esp+4);
+			check_vaddr(f->esp+8);
+			seek((int)*(uint32_t*)(f->esp+4),(unsigned)*(uint32_t*)(f->esp+8));
 			break;
 		case SYS_TELL:
 			break;
 		case SYS_CLOSE:
+			check_vaddr(f->esp+4);
+			close((int)*(uint32_t*)(f->esp+4));
 			break;
 		case SYS_PIBO:
 			check_vaddr(f->esp+4);
@@ -143,7 +156,12 @@ int read(int fd, void* buffer, unsigned size)
 		if(i!=size)
 			return -1;
 	}
-	return i;
+	
+	struct thread* now_t=thread_current();
+	if(now_t->FD[fd]==NULL)
+		return -1;
+	return file_read(now_t->FD[fd],buffer,size);
+
 }
 
 int write(int fd,const void *buffer, unsigned size)
@@ -153,7 +171,10 @@ int write(int fd,const void *buffer, unsigned size)
 		putbuf(buffer,size);
 		return size;
 	}
-	return -1;
+	struct thread* now_t=thread_current();
+	if(now_t->FD[fd]==NULL)
+		return 0;
+	return file_write(now_t->FD[fd],buffer,size);
 }
 
 int pibonacci(int n){
@@ -177,3 +198,60 @@ int pibonacci(int n){
 int sum_of_four_integers(int a,int b,int c,int d){
 	return a+b+c+d;
 }
+
+bool create(const char *file, unsigned initial_size)
+{
+	if(filesys_create(file,initial_size))
+		return true;
+	else
+		return false;
+}
+bool remove(const char *file)
+{
+	if(filesys_remove(file))
+		return true;
+	else
+		return false;
+}
+int open(const char* file)
+{
+	struct file* ret;
+	check_vaddr(file);
+	ret=filesys_open(file);
+	if(ret==NULL){//could not open
+		return -1;
+	}
+	struct thread* now_t=thread_current();
+	int i;
+	for(i=3;i<128;i++)
+	{
+		if(now_t->FD[i]==NULL){
+			now_t->FD[i]=ret;
+			return i;
+		}
+	}
+	return -1;
+
+}
+int filesize(int fd)
+{
+	struct thread* now_t=thread_current();
+      	return file_length(now_t->FD[fd]);
+}
+void seek(int fd, unsigned position)
+{
+	struct thread* now_t=thread_current();
+	file_seek(now_t->FD[fd],position);
+
+}
+unsigned tell(int fd)
+{
+	struct thread* now_t=thread_current();
+	return file_tell(now_t->FD[fd]);
+}
+void close(int fd)
+{
+	struct thread* now_t=thread_current();
+	file_close(now_t->FD[fd]);
+}
+

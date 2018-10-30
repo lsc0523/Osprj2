@@ -480,6 +480,12 @@ init_thread (struct thread *t, const char *name, int priority)
   list_push_back (&all_list, &t->allelem);
   list_init(&(t->child));
   t->waiting=false;
+  int i;
+  for(i=0;i<128;i++)
+	  t->FD[i]=NULL;
+  
+
+
  /*#ifdef USERPROG
   list_init(&(t->child));
   list_push_back(&(running_thread()->child),&(t->child_elem));

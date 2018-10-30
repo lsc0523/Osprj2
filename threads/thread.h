@@ -109,6 +109,10 @@ struct thread
     bool waiting;
     int exit_flag;
     int child_status;
+
+
+    struct file* FD[128]; /*for file decriptor*/
+
   };
 
 /* If false (default), use round-robin scheduler.
