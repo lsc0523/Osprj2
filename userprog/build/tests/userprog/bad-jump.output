@@ -1,5 +1,5 @@
 Copying tests/userprog/bad-jump to scratch partition...
-qemu -hda /tmp/ayiQQM8ejd.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/JTs5EoArgI.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run bad-jump
@@ -33,7 +33,7 @@ The `backtrace' program can make call stacks useful.
 Read "Backtraces" in the "Debugging Tools" chapter
 of the Pintos documentation for more information.
 Timer: 77 ticks
-Thread: 1 idle ticks, 75 kernel ticks, 1 user ticks
+Thread: 2 idle ticks, 74 kernel ticks, 1 user ticks
 hda2 (filesys): 65 reads, 222 writes
 hda3 (scratch): 108 reads, 2 writes
 Console: 1528 characters output

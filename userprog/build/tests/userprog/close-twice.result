@@ -1,14 +1,14 @@
 FAIL
 Kernel panic in run: PANIC at ../../filesys/inode.c:336 in inode_allow_write(): assertion `inode->deny_write_cnt <= inode->open_cnt' failed.
-Call stack: 0xc00284f0 0xc002d242 0xc002cab5 0xc002cbd4 0xc002bbd7 0xc002c079 0xc0021a4d 0xc0021b7f 0x804a1dc 0x80480fa 0x8048138 0x804875e
+Call stack: 0xc00284f0 0xc002d242 0xc002cab5 0xc002cbd4 0xc002bbd7 0xc002c082 0xc0021a4d 0xc0021b7f 0x804a1dc 0x80480fa 0x8048138 0x804875e
 Translation of call stack:
 In kernel.o:
 0xc00284f0: debug_panic (.../../lib/kernel/debug.c:38)
 0xc002d242: inode_allow_write (...../../filesys/inode.c:337)
 0xc002cab5: file_allow_write (.../../../filesys/file.c:141)
 0xc002cbd4: file_close (...d/../../filesys/file.c:51)
-0xc002bbd7: close (...../userprog/syscall.c:275)
-0xc002c079: syscall_handler (.../../userprog/syscall.c:95)
+0xc002bbd7: close (...../userprog/syscall.c:277)
+0xc002c082: syscall_handler (.../../userprog/syscall.c:95)
 0xc0021a4d: intr_handler (..../threads/interrupt.c:367)
 0xc0021b7f: intr_entry (threads/intr-stubs.S:38)
 In tests/userprog/close-twice:

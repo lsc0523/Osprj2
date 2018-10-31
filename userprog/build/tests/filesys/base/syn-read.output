@@ -1,6 +1,6 @@
 Copying tests/filesys/base/syn-read to scratch partition...
 Copying tests/filesys/base/child-syn-read to scratch partition...
-qemu -hda /tmp/s2CPKh4ZyG.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/SuGVxPExz_.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run syn-read
@@ -54,17 +54,16 @@ child-syn-read: exit(-1)
 (syn-read) exec child 10 of 10: "child-syn-read 9"
 load: child-syn-read: open failed
 child-syn-read: exit(-1)
-child-syn-read: exit(-1)
-(syn-read) wait for child 1 of 10 returned 0 (expected 0)
-(syn-read) wait for child 2 of 10 returned 0 (expected 1)
-(syn-read) wait for child 2 of 10 returned 0 (expected 1): FAILED
+child-syn-read: exit(9)
+(syn-read) wait for child 1 of 10 returned 9 (expected 0)
+(syn-read) wait for child 1 of 10 returned 9 (expected 0): FAILED
 syn-read: exit(1)
 Execution of 'syn-read' complete.
-Timer: 83 ticks
-Thread: 2 idle ticks, 77 kernel ticks, 4 user ticks
-hda2 (filesys): 189 reads, 486 writes
+Timer: 91 ticks
+Thread: 3 idle ticks, 76 kernel ticks, 12 user ticks
+hda2 (filesys): 1213 reads, 486 writes
 hda3 (scratch): 235 reads, 2 writes
-Console: 2249 characters output
+Console: 2192 characters output
 Keyboard: 0 keys pressed
-Exception: 10 page faults
+Exception: 9 page faults
 Powering off...

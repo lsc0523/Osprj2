@@ -19,10 +19,9 @@ Differences in `diff -u' format:
 - child-close: exit(0)
 + child-close: exit(-1)
   (multi-child-fd) wait(exec()) = 0
-- (multi-child-fd) verified contents of "sample.txt"
-- (multi-child-fd) end
-- multi-child-fd: exit(0)
-+ multi-child-fd: exit(-1)
+  (multi-child-fd) verified contents of "sample.txt"
+  (multi-child-fd) end
+  multi-child-fd: exit(0)
 Acceptable output:
   (multi-child-fd) begin
   (multi-child-fd) open "sample.txt"
@@ -38,8 +37,7 @@ Differences in `diff -u' format:
   (child-close) begin
   child-close: exit(-1)
 - (multi-child-fd) wait(exec()) = -1
-- (multi-child-fd) verified contents of "sample.txt"
-- (multi-child-fd) end
-- multi-child-fd: exit(0)
 + (multi-child-fd) wait(exec()) = 0
-+ multi-child-fd: exit(-1)
+  (multi-child-fd) verified contents of "sample.txt"
+  (multi-child-fd) end
+  multi-child-fd: exit(0)

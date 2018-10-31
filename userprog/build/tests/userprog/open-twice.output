@@ -1,13 +1,13 @@
 Copying tests/userprog/open-twice to scratch partition...
 Copying ../../tests/userprog/sample.txt to scratch partition...
-qemu -hda /tmp/M7UEsW7Aq1.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/Y62XMHum_Y.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run open-twice
 Pintos booting with 3,968 kB RAM...
 367 pages available in kernel pool.
 367 pages available in user pool.
-Calibrating timer...  314,163,200 loops/s.
+Calibrating timer...  438,272,000 loops/s.
 hda: 5,040 sectors (2 MB), model "QM00001", serial "QEMU HARDDISK"
 hda1: 147 sectors (73 kB), Pintos OS kernel (20)
 hda2: 4,096 sectors (2 MB), Pintos file system (21)
@@ -27,8 +27,8 @@ Executing 'open-twice':
 (open-twice) end
 open-twice: exit(0)
 Execution of 'open-twice' complete.
-Timer: 77 ticks
-Thread: 0 idle ticks, 76 kernel ticks, 1 user ticks
+Timer: 84 ticks
+Thread: 1 idle ticks, 82 kernel ticks, 1 user ticks
 hda2 (filesys): 103 reads, 228 writes
 hda3 (scratch): 110 reads, 2 writes
 Console: 1011 characters output

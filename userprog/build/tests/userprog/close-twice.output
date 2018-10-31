@@ -1,13 +1,13 @@
 Copying tests/userprog/close-twice to scratch partition...
 Copying ../../tests/userprog/sample.txt to scratch partition...
-qemu -hda /tmp/TPJxataHOw.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/9ssS_OOSLj.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run close-twice
 Pintos booting with 3,968 kB RAM...
 367 pages available in kernel pool.
 367 pages available in user pool.
-Calibrating timer...  314,163,200 loops/s.
+Calibrating timer...  419,430,400 loops/s.
 hda: 5,040 sectors (2 MB), model "QM00001", serial "QEMU HARDDISK"
 hda1: 147 sectors (73 kB), Pintos OS kernel (20)
 hda2: 4,096 sectors (2 MB), Pintos file system (21)
@@ -26,12 +26,12 @@ Executing 'close-twice':
 (close-twice) close "sample.txt"
 (close-twice) close "sample.txt" again
 Kernel PANIC at ../../filesys/inode.c:336 in inode_allow_write(): assertion `inode->deny_write_cnt <= inode->open_cnt' failed.
-Call stack: 0xc00284f0 0xc002d242 0xc002cab5 0xc002cbd4 0xc002bbd7 0xc002c079 0xc0021a4d 0xc0021b7f 0x804a1dc 0x80480fa 0x8048138 0x804875e.
+Call stack: 0xc00284f0 0xc002d242 0xc002cab5 0xc002cbd4 0xc002bbd7 0xc002c082 0xc0021a4d 0xc0021b7f 0x804a1dc 0x80480fa 0x8048138 0x804875e.
 The `backtrace' program can make call stacks useful.
 Read "Backtraces" in the "Debugging Tools" chapter
 of the Pintos documentation for more information.
-Timer: 77 ticks
-Thread: 1 idle ticks, 75 kernel ticks, 1 user ticks
+Timer: 87 ticks
+Thread: 2 idle ticks, 84 kernel ticks, 1 user ticks
 hda2 (filesys): 94 reads, 228 writes
 hda3 (scratch): 110 reads, 2 writes
 Console: 1394 characters output

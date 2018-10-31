@@ -1,5 +1,5 @@
 Copying tests/userprog/args-many to scratch partition...
-qemu -hda /tmp/w6V46LxVQn.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/SxNIjPGz03.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run 'args-many a b c d e f g h i j k l m n o p q r s t u v'
@@ -49,7 +49,7 @@ Executing 'args-many a b c d e f g h i j k l m n o p q r s t u v':
 args-many: exit(0)
 Execution of 'args-many a b c d e f g h i j k l m n o p q r s t u v' complete.
 Timer: 83 ticks
-Thread: 0 idle ticks, 81 kernel ticks, 2 user ticks
+Thread: 2 idle ticks, 80 kernel ticks, 1 user ticks
 hda2 (filesys): 64 reads, 220 writes
 hda3 (scratch): 107 reads, 2 writes
 Console: 1553 characters output

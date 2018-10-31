@@ -21,7 +21,7 @@ void check_vaddr(void* esp)
 	static void
 syscall_handler (struct intr_frame *f UNUSED) 
 {
-	//printf("syscall : %d\n",*(uint32_t *)(f->esp));
+//	printf("syscall : %d\n",*(uint32_t *)(f->esp));
 	/*printf("address : %10X\n\n",f->esp);
 	printf("f->esp+4 is %d\n\n",*(uint32_t*)(f->esp +4));
 	printf("f->esp+8 is %d\n\n",*(uint32_t*)(f->esp+8));
@@ -70,10 +70,10 @@ syscall_handler (struct intr_frame *f UNUSED)
 			f->eax=filesize((int)*(uint32_t*)(f->esp+4));
 			break;
 		case SYS_READ:
-			check_vaddr(f->esp+20);
-			check_vaddr(f->esp+24);
-			check_vaddr(f->esp+28);
-			f->eax=read((int)*(uint32_t *)(f->esp + 20), (void *)*(uint32_t *)(f->esp + 24), (unsigned)*((uint32_t *)(f->esp + 28)));
+			check_vaddr(f->esp+4);
+			check_vaddr(f->esp+8);
+			check_vaddr(f->esp+12);
+			f->eax=read((int)*(uint32_t *)(f->esp + 4), (void *)*(uint32_t *)(f->esp + 8), (unsigned)*((uint32_t *)(f->esp + 12)));
 			break;
 		case SYS_WRITE://9
 			check_vaddr(f->esp+4);
@@ -159,11 +159,13 @@ int read(int fd, void* buffer, unsigned size)
 		if(i!=size)
 			return -1;
 	}
-	
+	else if(fd>2){	
 	struct thread* now_t=thread_current();
 	if(now_t->FD[fd]==NULL)
 		return -1;
 	return file_read(now_t->FD[fd],buffer,size);
+	}
+	return i;
 
 }
 

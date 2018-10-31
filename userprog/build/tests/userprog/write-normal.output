@@ -1,6 +1,6 @@
 Copying tests/userprog/write-normal to scratch partition...
 Copying ../../tests/userprog/sample.txt to scratch partition...
-qemu -hda /tmp/2AHYc_4Dzw.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/Z5rVyUikRp.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run write-normal
@@ -28,7 +28,7 @@ Executing 'write-normal':
 write-normal: exit(0)
 Execution of 'write-normal' complete.
 Timer: 77 ticks
-Thread: 0 idle ticks, 76 kernel ticks, 1 user ticks
+Thread: 1 idle ticks, 76 kernel ticks, 0 user ticks
 hda2 (filesys): 117 reads, 236 writes
 hda3 (scratch): 111 reads, 2 writes
 Console: 1016 characters output

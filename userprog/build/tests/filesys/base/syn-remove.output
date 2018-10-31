@@ -1,5 +1,5 @@
 Copying tests/filesys/base/syn-remove to scratch partition...
-qemu -hda /tmp/GvptHJMShs.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/2M5F7WJQX2.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run syn-remove
@@ -26,13 +26,15 @@ Executing 'syn-remove':
 (syn-remove) write "deleteme"
 (syn-remove) seek "deleteme" to 0
 (syn-remove) read "deleteme"
-syn-remove: exit(-1)
+(syn-remove) close "deleteme"
+(syn-remove) end
+syn-remove: exit(0)
 Execution of 'syn-remove' complete.
 Timer: 77 ticks
-Thread: 2 idle ticks, 74 kernel ticks, 1 user ticks
-hda2 (filesys): 96 reads, 243 writes
+Thread: 0 idle ticks, 76 kernel ticks, 1 user ticks
+hda2 (filesys): 99 reads, 245 writes
 hda3 (scratch): 113 reads, 2 writes
-Console: 1060 characters output
+Console: 1106 characters output
 Keyboard: 0 keys pressed
-Exception: 1 page faults
+Exception: 0 page faults
 Powering off...
