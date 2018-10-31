@@ -21,7 +21,7 @@ void check_vaddr(void* esp)
 	static void
 syscall_handler (struct intr_frame *f UNUSED) 
 {
-	printf("syscall : %d\n",*(uint32_t *)(f->esp));
+	//printf("syscall : %d\n",*(uint32_t *)(f->esp));
 	/*printf("address : %10X\n\n",f->esp);
 	printf("f->esp+4 is %d\n\n",*(uint32_t*)(f->esp +4));
 	printf("f->esp+8 is %d\n\n",*(uint32_t*)(f->esp+8));
@@ -87,6 +87,8 @@ syscall_handler (struct intr_frame *f UNUSED)
 			seek((int)*(uint32_t*)(f->esp+4),(unsigned)*(uint32_t*)(f->esp+8));
 			break;
 		case SYS_TELL:
+			check_vaddr(f->esp+4);
+			f->eax=tell((int)*(uint32_t*)(f->esp+4));
 			break;
 		case SYS_CLOSE:
 			check_vaddr(f->esp+4);
@@ -147,6 +149,7 @@ int wait(pid_t pid)
 int read(int fd, void* buffer, unsigned size)
 {
 	int i=0;
+	check_vaddr(buffer);
 	if(fd==0){
 		for (i=0;i<size;i++){
 			if(*(uint8_t *)(buffer+i) = input_getc()){
@@ -166,6 +169,7 @@ int read(int fd, void* buffer, unsigned size)
 
 int write(int fd,const void *buffer, unsigned size)
 {
+	check_vaddr(buffer);
 	if(fd==1){
 	
 		putbuf(buffer,size);
@@ -201,6 +205,9 @@ int sum_of_four_integers(int a,int b,int c,int d){
 
 bool create(const char *file, unsigned initial_size)
 {
+	if(file==NULL)
+		exit(-1);
+	check_vaddr(file);
 	if(filesys_create(file,initial_size))
 		return true;
 	else
@@ -208,6 +215,8 @@ bool create(const char *file, unsigned initial_size)
 }
 bool remove(const char *file)
 {
+	if(file==NULL)
+		exit(-1);
 	if(filesys_remove(file))
 		return true;
 	else
@@ -215,10 +224,12 @@ bool remove(const char *file)
 }
 int open(const char* file)
 {
-	struct file* ret;
+	if(file==NULL)
+		exit(-1);
 	check_vaddr(file);
-	ret=filesys_open(file);
+	struct file* ret=filesys_open(file);
 	if(ret==NULL){//could not open
+		//printf("없어ㅠㅠ\n");
 		return -1;
 	}
 	struct thread* now_t=thread_current();
@@ -236,22 +247,30 @@ int open(const char* file)
 int filesize(int fd)
 {
 	struct thread* now_t=thread_current();
+	if(now_t->FD[fd]==NULL)
+		exit(-1);
       	return file_length(now_t->FD[fd]);
 }
 void seek(int fd, unsigned position)
 {
 	struct thread* now_t=thread_current();
+	if(now_t->FD[fd]==NULL)
+		exit(-1);
 	file_seek(now_t->FD[fd],position);
 
 }
 unsigned tell(int fd)
 {
 	struct thread* now_t=thread_current();
+	if(now_t->FD[fd]==NULL)
+		exit(-1);
 	return file_tell(now_t->FD[fd]);
 }
 void close(int fd)
 {
 	struct thread* now_t=thread_current();
-	file_close(now_t->FD[fd]);
+	if(now_t->FD[fd]==NULL)
+		exit(-1);
+	return file_close(now_t->FD[fd]);
 }
 

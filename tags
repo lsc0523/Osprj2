@@ -117,6 +117,7 @@ Elf32_Off	userprog/process.c	/^typedef uint32_t Elf32_Word, Elf32_Addr, Elf32_Of
 Elf32_Phdr	userprog/process.c	/^struct Elf32_Phdr$/;"	s	file:
 Elf32_Word	userprog/process.c	/^typedef uint32_t Elf32_Word, Elf32_Addr, Elf32_Off;$/;"	t	file:
 FCR_REG	devices/serial.c	31;"	d	file:
+FD	threads/thread.h	/^    struct file* FD[128]; \/*for file decriptor*\/$/;"	m	struct:thread	typeref:struct:thread::file
 FILESYS_DIRECTORY_H	filesys/directory.h	2;"	d
 FILESYS_FILESYS_H	filesys/filesys.h	2;"	d
 FILESYS_FILE_H	filesys/file.h	2;"	d
@@ -772,7 +773,7 @@ check_partition	threads/loader.S	/^check_partition:$/;"	l
 check_process_death	tests/vm/process_death.pm	/^sub check_process_death {$/;"	s
 check_sector	devices/block.c	/^check_sector (struct block *block, block_sector_t sector)$/;"	f	file:
 check_tell	tests/filesys/extended/grow-tell.c	/^check_tell (int fd, long ofs) $/;"	f	file:
-check_vaddr	userprog/syscall.c	/^check_vaddr(void* esp)$/;"	f
+check_vaddr	userprog/syscall.c	/^void check_vaddr(void* esp)$/;"	f
 checkf	tests/internal/stdio.c	/^checkf (const char *expect, const char *format, ...) $/;"	f	file:
 child	threads/thread.h	/^    struct list child;$/;"	m	struct:thread	typeref:struct:thread::list
 child_elem	threads/thread.h	/^    struct list_elem child_elem;$/;"	m	struct:thread	typeref:struct:thread::list_elem
@@ -784,6 +785,7 @@ cksum	tests/cksum.pm	/^sub cksum {$/;"	s
 cksum_file	tests/cksum.pm	/^sub cksum_file {$/;"	s
 clear_row	devices/vga.c	/^clear_row (size_t y) $/;"	f	file:
 close	lib/user/syscall.c	/^close (int fd)$/;"	f
+close	userprog/syscall.c	/^void close(int fd)$/;"	f
 cls	devices/vga.c	/^cls (void)$/;"	f	file:
 cmos_read	devices/rtc.c	/^cmos_read (uint8_t index)$/;"	f	file:
 cmp_SRC	examples/Makefile	/^cmp_SRC = cmp.c$/;"	m
@@ -818,6 +820,7 @@ cpu	utils/pintos	/^cpu: ips=1000000$/;"	l
 cr3	userprog/tss.c	/^    uint32_t cr3;$/;"	m	struct:tss	file:
 crctab	tests/cksum.c	/^static unsigned long crctab[] = {$/;"	v	file:
 create	lib/user/syscall.c	/^create (const char *file, unsigned initial_size)$/;"	f
+create	userprog/syscall.c	/^bool create(const char *file, unsigned initial_size)$/;"	f
 cs	threads/interrupt.h	/^    uint16_t cs, :16;           \/* Code segment for eip. *\/$/;"	m	struct:intr_frame
 cs	userprog/tss.c	/^    uint16_t cs, :16;$/;"	m	struct:tss	file:
 cur	threads/switch.h	/^    struct thread *cur;         \/* 20: switch_threads()'s CUR argument. *\/$/;"	m	struct:switch_threads_frame	typeref:struct:switch_threads_frame::thread
@@ -977,6 +980,7 @@ file_tell	filesys/file.c	/^file_tell (struct file *file) $/;"	f
 file_write	filesys/file.c	/^file_write (struct file *file, const void *buffer, off_t size) $/;"	f
 file_write_at	filesys/file.c	/^file_write_at (struct file *file, const void *buffer, off_t size,$/;"	f
 filesize	lib/user/syscall.c	/^filesize (int fd) $/;"	f
+filesize	userprog/syscall.c	/^int filesize(int fd)$/;"	f
 filesys_SRC	filesys/build/Makefile	/^filesys_SRC  = filesys\/filesys.c	# Filesystem core.$/;"	m
 filesys_SRC	threads/build/Makefile	/^filesys_SRC  = filesys\/filesys.c	# Filesystem core.$/;"	m
 filesys_SRC	userprog/build/Makefile	/^filesys_SRC  = filesys\/filesys.c	# Filesystem core.$/;"	m
@@ -1462,6 +1466,7 @@ off_t	filesys/off_t.h	/^typedef int32_t off_t;$/;"	t
 offsetof	lib/stddef.h	5;"	d
 op	tests/threads/priority-fifo.c	/^    int **op;                   \/* Output buffer position. *\/$/;"	m	struct:simple_thread_data	file:
 open	lib/user/syscall.c	/^open (const char *file)$/;"	f
+open	userprog/syscall.c	/^int open(const char* file)$/;"	f
 open_cnt	filesys/inode.c	/^    int open_cnt;                       \/* Number of openers. *\/$/;"	m	struct:inode	file:
 open_file	tests/tests.pm	/^sub open_file {$/;"	s
 open_inodes	filesys/inode.c	/^static struct list open_inodes;$/;"	v	typeref:struct:list	file:
@@ -1644,6 +1649,7 @@ relay	utils/squish-unix.c	/^relay (int sock) $/;"	f	file:
 relay_signal	utils/pintos	/^sub relay_signal {$/;"	s
 release_console	lib/kernel/console.c	/^release_console (void) $/;"	f	file:
 remove	lib/user/syscall.c	/^remove (const char *file)$/;"	f
+remove	userprog/syscall.c	/^bool remove(const char *file)$/;"	f
 remove_elem	lib/kernel/hash.c	/^remove_elem (struct hash *h, struct hash_elem *e) $/;"	f	file:
 remove_tree	tests/filesys/extended/dir-rm-tree.c	/^remove_tree (int at, int bt, int ct, int dt) $/;"	f	file:
 removed	filesys/inode.c	/^    bool removed;                       \/* True if deleted, false otherwise. *\/$/;"	m	struct:inode	file:
@@ -1678,6 +1684,7 @@ search_path	utils/backtrace	/^sub search_path {$/;"	s
 second	tests/threads/priority-donate-chain.c	/^    struct lock *second;$/;"	m	struct:lock_pair	typeref:struct:lock_pair::lock	file:
 sector	filesys/inode.c	/^    block_sector_t sector;              \/* Sector number of disk location. *\/$/;"	m	struct:inode	file:
 seek	lib/user/syscall.c	/^seek (int fd, unsigned position) $/;"	f
+seek	userprog/syscall.c	/^void seek(int fd, unsigned position)$/;"	f
 seg_class	userprog/gdt.c	/^enum seg_class$/;"	g	file:
 seg_granularity	userprog/gdt.c	/^enum seg_granularity$/;"	g	file:
 select_device	devices/ide.c	/^select_device (const struct ata_disk *d)$/;"	f	file:
@@ -1811,10 +1818,11 @@ syscall2	lib/user/syscall.c	34;"	d	file:
 syscall3	lib/user/syscall.c	50;"	d	file:
 syscall4	lib/user/syscall.c	65;"	d	file:
 syscall_handler	userprog/syscall.c	/^syscall_handler (struct intr_frame *f UNUSED) $/;"	f	file:
-syscall_init	userprog/syscall.c	/^syscall_init (void) $/;"	f
+syscall_init	userprog/syscall.c	/^void syscall_init (void) $/;"	f
 tail	devices/intq.h	/^    int tail;                   \/* Old data is read here. *\/$/;"	m	struct:intq
 tail	lib/kernel/list.h	/^    struct list_elem tail;      \/* List tail. *\/$/;"	m	struct:list	typeref:struct:list::list_elem
 tell	lib/user/syscall.c	/^tell (int fd) $/;"	f
+tell	userprog/syscall.c	/^unsigned tell(int fd)$/;"	f
 test	tests/internal/list.c	/^test (void) $/;"	f
 test	tests/internal/stdio.c	/^test (void) $/;"	f
 test	tests/internal/stdlib.c	/^test (void) $/;"	f
