@@ -51,7 +51,9 @@ process_execute (const char *file_name)
   }
   copy[i]='\0';
   if(filesys_open(copy)==NULL)
+  {
 	  return -1;
+  }
 
   /* Create a new thread to execute FILE_NAME. */
   tid = thread_create (copy, PRI_DEFAULT, start_process, fn_copy);

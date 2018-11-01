@@ -21,7 +21,7 @@ void check_vaddr(void* esp)
 	static void
 syscall_handler (struct intr_frame *f UNUSED) 
 {
-//	printf("syscall : %d\n",*(uint32_t *)(f->esp));
+	//printf("syscall : %d\n",*(uint32_t *)(f->esp));
 	/*printf("address : %10X\n\n",f->esp);
 	printf("f->esp+4 is %d\n\n",*(uint32_t*)(f->esp +4));
 	printf("f->esp+8 is %d\n\n",*(uint32_t*)(f->esp+8));
@@ -128,6 +128,7 @@ void exit(int status)
 	{
 		now->parent->child_status=THREAD_DYING;
 		now->parent->waiting=false;
+		now->parent->exit_flag=status;
 	}
 	printf("%s: exit(%d)\n",thread_name(),status);
 	thread_exit();
@@ -142,7 +143,8 @@ pid_t exec(const char *cmd)
 
 int wait(pid_t pid)
 {
-	return process_wait(pid);
+	int result= process_wait(pid);
+	return result;
 
 }
 
@@ -173,14 +175,16 @@ int write(int fd,const void *buffer, unsigned size)
 {
 	check_vaddr(buffer);
 	if(fd==1){
-	
 		putbuf(buffer,size);
 		return size;
 	}
+	else if(fd>2){
 	struct thread* now_t=thread_current();
 	if(now_t->FD[fd]==NULL)
-		return 0;
+		exit(-1);
 	return file_write(now_t->FD[fd],buffer,size);
+	}
+	return -1;
 }
 
 int pibonacci(int n){
@@ -272,7 +276,13 @@ void close(int fd)
 {
 	struct thread* now_t=thread_current();
 	if(now_t->FD[fd]==NULL)
+	{
 		exit(-1);
-	return file_close(now_t->FD[fd]);
+	}
+	struct file* p;
+	p=now_t->FD[fd];
+	p=NULL;
+	return file_close(p);
+	//now_t->FD[fd]=NULL;
 }
 
