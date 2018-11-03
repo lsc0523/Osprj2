@@ -1,13 +1,13 @@
 Copying tests/filesys/base/syn-write to scratch partition...
 Copying tests/filesys/base/child-syn-wrt to scratch partition...
-qemu -hda /tmp/lsOHTc2O6h.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/a4xcBJcfpp.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run syn-write
 Pintos booting with 3,968 kB RAM...
 367 pages available in kernel pool.
 367 pages available in user pool.
-Calibrating timer...  444,825,600 loops/s.
+Calibrating timer...  314,163,200 loops/s.
 hda: 5,040 sectors (2 MB), model "QM00001", serial "QEMU HARDDISK"
 hda1: 147 sectors (73 kB), Pintos OS kernel (20)
 hda2: 4,096 sectors (2 MB), Pintos file system (21)
@@ -56,8 +56,8 @@ child-syn-wrt: exit(9)
 (syn-write) wait for child 1 of 10 returned 9 (expected 0): FAILED
 syn-write: exit(1)
 Execution of 'syn-write' complete.
-Timer: 88 ticks
-Thread: 4 idle ticks, 81 kernel ticks, 3 user ticks
+Timer: 83 ticks
+Thread: 3 idle ticks, 77 kernel ticks, 3 user ticks
 hda2 (filesys): 184 reads, 493 writes
 hda3 (scratch): 235 reads, 2 writes
 Console: 2109 characters output

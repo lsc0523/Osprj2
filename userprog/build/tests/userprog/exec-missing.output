@@ -1,5 +1,5 @@
 Copying tests/userprog/exec-missing to scratch partition...
-qemu -hda /tmp/vRddfp04Ee.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/LSMGJB5Jz4.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run exec-missing

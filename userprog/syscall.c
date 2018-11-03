@@ -4,9 +4,14 @@
 #include "threads/interrupt.h"
 #include "threads/thread.h"
 #include "threads/vaddr.h"
-
+#include "filesys/off_t.h"
 static void syscall_handler (struct intr_frame *);
-
+struct file
+{
+	struct inode *inode;
+	off_t pos;
+	bool deny_write;
+};
 	
 void syscall_init (void) 
 {
@@ -22,13 +27,13 @@ void check_vaddr(void* esp)
 syscall_handler (struct intr_frame *f UNUSED) 
 {
 	//printf("syscall : %d\n",*(uint32_t *)(f->esp));
-	/*printf("address : %10X\n\n",f->esp);
+/*	printf("address : %10X\n\n",f->esp);
 	printf("f->esp+4 is %d\n\n",*(uint32_t*)(f->esp +4));
 	printf("f->esp+8 is %d\n\n",*(uint32_t*)(f->esp+8));
 	printf("f->esp+12 is %d\n\n",*(uint32_t*)(f->esp+12));
 	printf("f->esp+12 is %d\n\n",*(uint32_t*)(f->esp+16));
-	printf("f->esp+12 is %d\n\n",*(uint32_t*)(f->esp+20));*/
-
+	printf("f->esp+12 is %d\n\n",*(uint32_t*)(f->esp+20));
+*/
 	if(is_kernel_vaddr(f->esp))
 		exit(-1);
 	//hex_dump(f->esp,f->esp,100,1);
@@ -173,16 +178,22 @@ int read(int fd, void* buffer, unsigned size)
 
 int write(int fd,const void *buffer, unsigned size)
 {
+	//printf("fd is %d \nbuffer is [%s]\n",fd,buffer);
 	check_vaddr(buffer);
+	struct thread* now_t=thread_current();
 	if(fd==1){
 		putbuf(buffer,size);
 		return size;
 	}
 	else if(fd>2){
-	struct thread* now_t=thread_current();
-	if(now_t->FD[fd]==NULL)
-		exit(-1);
-	return file_write(now_t->FD[fd],buffer,size);
+		if(now_t->FD[fd]==NULL)
+			exit(-1);
+		if(thread_current()->FD[fd]->deny_write){
+			file_deny_write(thread_current()->FD[fd]);
+		}
+		/*if(thread_current()->FD[fd]->deny_write)
+			printf("%d 는 deny당해버렸어요~~\n",fd);*/
+		return file_write(now_t->FD[fd],buffer,size);
 	}
 	return -1;
 }
@@ -238,11 +249,18 @@ int open(const char* file)
 		//printf("없어ㅠㅠ\n");
 		return -1;
 	}
+
+	//file_deny_write(file);
+
 	struct thread* now_t=thread_current();
 	int i;
 	for(i=3;i<128;i++)
 	{
 		if(now_t->FD[i]==NULL){
+			if(strcmp(now_t->name,file)==0)
+			{
+				file_deny_write(ret);
+			}
 			now_t->FD[i]=ret;
 			return i;
 		}
@@ -281,6 +299,7 @@ void close(int fd)
 	}
 	struct file* p;
 	p=now_t->FD[fd];
+	file_allow_write(p);
 	p=NULL;
 	return file_close(p);
 	//now_t->FD[fd]=NULL;

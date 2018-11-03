@@ -1,5 +1,5 @@
 Copying tests/filesys/base/sm-seq-block to scratch partition...
-qemu -hda /tmp/V1PBV_aJpp.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/XxmY7trNck.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run sm-seq-block
@@ -30,8 +30,8 @@ Executing 'sm-seq-block':
 (sm-seq-block) end
 sm-seq-block: exit(0)
 Execution of 'sm-seq-block' complete.
-Timer: 78 ticks
-Thread: 1 idle ticks, 75 kernel ticks, 2 user ticks
+Timer: 77 ticks
+Thread: 1 idle ticks, 75 kernel ticks, 1 user ticks
 hda2 (filesys): 126 reads, 269 writes
 hda3 (scratch): 112 reads, 2 writes
 Console: 1150 characters output

@@ -1,5 +1,5 @@
 Copying tests/userprog/no-vm/multi-oom to scratch partition...
-qemu -hda /tmp/6AI0VJuxfq.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/BL4Fvwqy9f.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run multi-oom
@@ -28,13 +28,43 @@ multi-oom: exit(-1)
 multi-oom: exit(-1)
 multi-oom: exit(-1)
 multi-oom: exit(-1)
-Page fault at 0: not present error writing page in user context.
-multi-oom: dying due to interrupt 0x0e (#PF Page-Fault Exception).
-Interrupt 0x0e (#PF Page-Fault Exception) at eip=0x8048104
- cr2=00000000 error=00000006
- eax=00000000 ebx=00000019 ecx=5fe68ecb edx=5fe68ecb
- esi=c0000000 edi=0804b087 esp=bfffff60 ebp=bfffff78
- cs=001b ds=0023 es=0023 ss=0023
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
 multi-oom: exit(-1)
 (multi-oom) wait returned -1.: FAILED
 multi-oom: exit(1)
@@ -60,6 +90,43 @@ multi-oom: exit(1)
 multi-oom: exit(1)
 multi-oom: exit(1)
 multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
+multi-oom: exit(1)
 multi-oom: exit(-1)
 multi-oom: exit(-1)
 multi-oom: exit(-1)
@@ -68,13 +135,43 @@ multi-oom: exit(-1)
 multi-oom: exit(-1)
 multi-oom: exit(-1)
 multi-oom: exit(-1)
-Page fault at 0: not present error writing page in user context.
-multi-oom: dying due to interrupt 0x0e (#PF Page-Fault Exception).
-Interrupt 0x0e (#PF Page-Fault Exception) at eip=0x8048104
- cr2=00000000 error=00000006
- eax=00000000 ebx=00000019 ecx=5fe68ecb edx=5fe68ecb
- esi=c0000000 edi=0804b087 esp=bfffff60 ebp=bfffff78
- cs=001b ds=0023 es=0023 ss=0023
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
+multi-oom: exit(-1)
 multi-oom: exit(-1)
 (multi-oom) wait returned -1.: FAILED
 multi-oom: exit(1)
@@ -100,23 +197,6 @@ multi-oom: exit(1)
 multi-oom: exit(1)
 multi-oom: exit(1)
 multi-oom: exit(1)
-multi-oom: exit(-1)
-multi-oom: exit(-1)
-multi-oom: exit(-1)
-multi-oom: exit(-1)
-multi-oom: exit(-1)
-multi-oom: exit(-1)
-multi-oom: exit(-1)
-multi-oom: exit(-1)
-Page fault at 0: not present error writing page in user context.
-multi-oom: dying due to interrupt 0x0e (#PF Page-Fault Exception).
-Interrupt 0x0e (#PF Page-Fault Exception) at eip=0x8048104
- cr2=00000000 error=00000006
- eax=00000000 ebx=00000019 ecx=5fe68ecb edx=5fe68ecb
- esi=c0000000 edi=0804b087 esp=bfffff60 ebp=bfffff78
- cs=001b ds=0023 es=0023 ss=0023
-multi-oom: exit(-1)
-(multi-oom) wait returned -1.: FAILED
 multi-oom: exit(1)
 multi-oom: exit(1)
 multi-oom: exit(1)
@@ -131,32 +211,6 @@ multi-oom: exit(1)
 multi-oom: exit(1)
 multi-oom: exit(1)
 multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(-1)
-multi-oom: exit(-1)
-multi-oom: exit(-1)
-multi-oom: exit(-1)
-multi-oom: exit(-1)
-multi-oom: exit(-1)
-multi-oom: exit(-1)
-multi-oom: exit(-1)
-Page fault at 0: not present error writing page in user context.
-multi-oom: dying due to interrupt 0x0e (#PF Page-Fault Exception).
-Interrupt 0x0e (#PF Page-Fault Exception) at eip=0x8048104
- cr2=00000000 error=00000006
- eax=00000000 ebx=00000019 ecx=5fe68ecb edx=5fe68ecb
- esi=c0000000 edi=0804b087 esp=bfffff60 ebp=bfffff78
- cs=001b ds=0023 es=0023 ss=0023
-multi-oom: exit(-1)
-(multi-oom) wait returned -1.: FAILED
 multi-oom: exit(1)
 multi-oom: exit(1)
 multi-oom: exit(1)
@@ -188,38 +242,6 @@ multi-oom: exit(-1)
 multi-oom: exit(-1)
 multi-oom: exit(-1)
 multi-oom: exit(-1)
-Page fault at 0: not present error writing page in user context.
-multi-oom: dying due to interrupt 0x0e (#PF Page-Fault Exception).
-Interrupt 0x0e (#PF Page-Fault Exception) at eip=0x8048104
- cr2=00000000 error=00000006
- eax=00000000 ebx=00000019 ecx=5fe68ecb edx=5fe68ecb
- esi=c0000000 edi=0804b087 esp=bfffff60 ebp=bfffff78
- cs=001b ds=0023 es=0023 ss=0023
-multi-oom: exit(-1)
-(multi-oom) wait returned -1.: FAILED
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
 multi-oom: exit(-1)
 multi-oom: exit(-1)
 multi-oom: exit(-1)
@@ -228,38 +250,6 @@ multi-oom: exit(-1)
 multi-oom: exit(-1)
 multi-oom: exit(-1)
 multi-oom: exit(-1)
-Page fault at 0: not present error writing page in user context.
-multi-oom: dying due to interrupt 0x0e (#PF Page-Fault Exception).
-Interrupt 0x0e (#PF Page-Fault Exception) at eip=0x8048104
- cr2=00000000 error=00000006
- eax=00000000 ebx=00000019 ecx=5fe68ecb edx=5fe68ecb
- esi=c0000000 edi=0804b087 esp=bfffff60 ebp=bfffff78
- cs=001b ds=0023 es=0023 ss=0023
-multi-oom: exit(-1)
-(multi-oom) wait returned -1.: FAILED
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
 multi-oom: exit(-1)
 multi-oom: exit(-1)
 multi-oom: exit(-1)
@@ -268,16 +258,4 @@ multi-oom: exit(-1)
 multi-oom: exit(-1)
 multi-oom: exit(-1)
 multi-oom: exit(-1)
-Page fault at 0: not present error writing page in user context.
-multi-oom: dying due to interrupt 0x0e (#PF Page-Fault Exception).
-Interrupt 0x0e (#PF Page-Fault Exception) at eip=0x8048104
- cr2=00000000 error=00000006
- eax=00000000 ebx=00000019 ecx=5fe68ecb edx=5fe68ecb
- esi=c0000000 edi=0804b087 esp=bfffff60 ebp=bfffff78
- cs=001b ds=0023 es=0023 ss=0023
-multi-oom: exit(-1)
-(multi-oom) wait returned -1.: FAILED
-multi-oom: exit(1)
-multi-oom: exit(1)
-multi-oom: exit(1)
 Simulation terminated due to test failure.

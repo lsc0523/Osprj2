@@ -1,5 +1,5 @@
 Copying tests/userprog/exec-bad-ptr to scratch partition...
-qemu -hda /tmp/7GWeY5PO9N.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/Z_ehqup3Mk.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run exec-bad-ptr

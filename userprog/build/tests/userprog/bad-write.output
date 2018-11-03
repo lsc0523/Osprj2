@@ -1,12 +1,12 @@
 Copying tests/userprog/bad-write to scratch partition...
-qemu -hda /tmp/BZ768d5zPM.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/4GpjPAqxLZ.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run bad-write
 Pintos booting with 3,968 kB RAM...
 367 pages available in kernel pool.
 367 pages available in user pool.
-Calibrating timer...  314,163,200 loops/s.
+Calibrating timer...  431,718,400 loops/s.
 hda: 5,040 sectors (2 MB), model "QM00001", serial "QEMU HARDDISK"
 hda1: 147 sectors (73 kB), Pintos OS kernel (20)
 hda2: 4,096 sectors (2 MB), Pintos file system (21)
@@ -20,23 +20,13 @@ Putting 'bad-write' into the file system...
 Erasing ustar archive...
 Executing 'bad-write':
 (bad-write) begin
-Page fault at 0: not present error writing page in user context.
-bad-write: dying due to interrupt 0x0e (#PF Page-Fault Exception).
-Interrupt 0x0e (#PF Page-Fault Exception) at eip=0x80480a6
- cr2=00000000 error=00000006
- eax=00000027 ebx=00000000 ecx=000000ad edx=0000000e
- esi=00000000 edi=00000000 esp=bfffffa0 ebp=bfffffa8
- cs=001b ds=0023 es=0023 ss=0023
-Kernel PANIC at ../../lib/kernel/list.c:251 in list_remove(): assertion `is_interior (elem)' failed.
-Call stack: 0xc00284f0 0xc0028575 0xc002bb82 0xc002ba7f 0xc0021a4d 0xc0021b7f 0xc002a48f 0xc0020285 0xc0020930.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 77 ticks
-Thread: 0 idle ticks, 76 kernel ticks, 1 user ticks
+bad-write: exit(-1)
+Execution of 'bad-write' complete.
+Timer: 83 ticks
+Thread: 2 idle ticks, 81 kernel ticks, 0 user ticks
 hda2 (filesys): 63 reads, 220 writes
 hda3 (scratch): 107 reads, 2 writes
-Console: 1541 characters output
+Console: 870 characters output
 Keyboard: 0 keys pressed
-Exception: 2 page faults
+Exception: 1 page faults
 Powering off...
