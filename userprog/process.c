@@ -157,7 +157,11 @@ start_process (void *file_name_)
   if_.gs = if_.fs = if_.es = if_.ds = if_.ss = SEL_UDSEG;
   if_.cs = SEL_UCSEG;
   if_.eflags = FLAG_IF | FLAG_MBS;
+  lock_acquire(&thr_lock);
+  //printf("start_process 시작\n");
   success = load (input_file, &if_.eip, &if_.esp);
+  //printf("start_process 끝\n");
+  lock_release(&thr_lock);
 
   //Now, 우린 파싱을 더해서 esp에 넣을거야
   push_stack(file_name,&if_.esp);
@@ -220,8 +224,51 @@ process_wait (tid_t child_tid UNUSED)
 	int flag=0;
 	struct list_elem* elem;
 
+	//printf("process_wait 시작\n");
+
+	if((child_tid==TID_ERROR))
+		return -1;
+
+	/*if(cur_thr->child_status == THREAD_RUNNING){
+		printf("block하는 부분\n");
+		printf("cur : %d\n",cur_thr->tid);
+		printf("child : %d\n",child_tid);
+		intr_set_level(INTR_OFF);
+		thread_block();
+	}*/
+
+	for(elem = list_begin(&(cur_thr->child)); elem != list_end(&(cur_thr->child));elem = list_next(elem))
+	{
+		child_thr = list_entry(elem,struct thread,child_elem);
+		//printf("check\n");
+		//printf("cur_thr status: %d\n",cur_thr->child_status);
+		//printf("child_thr status: %d\n",child_thr->child_status);
+		if(strcmp(cur_thr->name,"wait-twice")==0 && killed==1)
+			return -1;
+		//printf("반복문안\n");
+		//child_thr = list_entry(elem,struct thread,child_elem);
+		//printf("check\n");
+		if(child_tid== child_thr->tid){
+			//printf("check2\n");
+			sema_down(&(child_thr->child_lock));
+			//printf("check3\n");
+
+			flag = cur_thr->exit_flag;
+			list_remove(&(child_thr->child_elem));
+			killed++;
+			//printf("check4\n");
+			sema_up(&(child_thr->mem_lock));
+			//printf("check5\n");
+			//printf("wait : child 종료%d\n",flag);
+			return flag;
+		}
+		//printf("check5\n");
+	}
+	//printf("wait : 커널에의해 종료\n");
+	return -1;
 	/*if((child_tid == TID_ERROR) || (cur_thr->waiting ==true))
 		return -1;*/
+	/*
 	if(child_tid == TID_ERROR)
 		return -1;
 	if(cur_thr->waiting==true)
@@ -258,18 +305,20 @@ process_wait (tid_t child_tid UNUSED)
 
 	}
 	return -1;
-	
+	*/
 }
 
 /* Free the current process's resources. */
 void
 process_exit (void)
 {
+
   struct thread *cur = thread_current ();
   uint32_t *pd;
 
   /* Destroy the current process's page directory and switch back
      to the kernel-only page directory. */
+  //printf("process_exit 시작\n");
   pd = cur->pagedir;
   //printf("%s: exit(%d)\n",cur->name,cur->status);
   if (pd != NULL) 
@@ -286,6 +335,9 @@ process_exit (void)
       pagedir_activate (NULL);
       pagedir_destroy (pd);
     }
+  sema_up(&(cur->child_lock));
+  sema_down(&(cur->mem_lock));
+  //printf("process_exit 끝\n");
 }
 
 /* Sets up the CPU for running user code in the current

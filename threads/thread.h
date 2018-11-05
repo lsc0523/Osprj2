@@ -4,6 +4,9 @@
 #include <debug.h>
 #include <list.h>
 #include <stdint.h>
+#include "synch.h" 
+
+
 
 /* States in a thread's life cycle. */
 enum thread_status
@@ -14,6 +17,7 @@ enum thread_status
     THREAD_DYING        /* About to be destroyed. */
   };
 
+struct lock thr_lock;
 /* Thread identifier type.
    You can redefine this to whatever type you like. */
 typedef int tid_t;
@@ -109,6 +113,8 @@ struct thread
     bool waiting;
     int exit_flag;
     int child_status;
+	struct semaphore child_lock;
+	struct semaphore mem_lock;
 
 
     struct file* FD[128]; /*for file decriptor*/

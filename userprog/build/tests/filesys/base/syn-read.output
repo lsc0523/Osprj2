@@ -1,13 +1,13 @@
 Copying tests/filesys/base/syn-read to scratch partition...
 Copying tests/filesys/base/child-syn-read to scratch partition...
-qemu -hda /tmp/5SRy9Iz9oI.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/ZG7VF4FUTD.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run syn-read
 Pintos booting with 3,968 kB RAM...
 367 pages available in kernel pool.
 367 pages available in user pool.
-Calibrating timer...  314,163,200 loops/s.
+Calibrating timer...  209,510,400 loops/s.
 hda: 5,040 sectors (2 MB), model "QM00001", serial "QEMU HARDDISK"
 hda1: 147 sectors (73 kB), Pintos OS kernel (20)
 hda2: 4,096 sectors (2 MB), Pintos file system (21)
@@ -54,16 +54,15 @@ child-syn-read: exit(-1)
 (syn-read) exec child 10 of 10: "child-syn-read 9"
 load: child-syn-read: open failed
 child-syn-read: exit(-1)
-child-syn-read: exit(9)
-(syn-read) wait for child 1 of 10 returned 9 (expected 0)
-(syn-read) wait for child 1 of 10 returned 9 (expected 0): FAILED
+(syn-read) wait for child 1 of 10 returned -1 (expected 0)
+(syn-read) wait for child 1 of 10 returned -1 (expected 0): FAILED
 syn-read: exit(1)
 Execution of 'syn-read' complete.
-Timer: 92 ticks
-Thread: 7 idle ticks, 77 kernel ticks, 8 user ticks
-hda2 (filesys): 1212 reads, 486 writes
+Timer: 90 ticks
+Thread: 6 idle ticks, 76 kernel ticks, 8 user ticks
+hda2 (filesys): 149 reads, 486 writes
 hda3 (scratch): 235 reads, 2 writes
-Console: 2191 characters output
+Console: 2168 characters output
 Keyboard: 0 keys pressed
 Exception: 9 page faults
 Powering off...

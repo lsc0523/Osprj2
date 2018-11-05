@@ -89,6 +89,8 @@ thread_init (void)
 {
   ASSERT (intr_get_level () == INTR_OFF);
 
+  lock_init(&thr_lock);
+
   lock_init (&tid_lock);
   list_init (&ready_list);
   list_init (&all_list);
@@ -297,8 +299,10 @@ thread_exit (void)
 #ifdef USERPROG
   process_exit ();
   //list_remove(&thread_current()->allelem);
+  /*
   if(thread_current()->parent->status == THREAD_BLOCKED)
 	  thread_unblock(thread_current()->parent);
+	  */
   //thread_current()->status=THREAD_DYING;
 #endif
 
@@ -479,7 +483,12 @@ init_thread (struct thread *t, const char *name, int priority)
   t->magic = THREAD_MAGIC;
   list_push_back (&all_list, &t->allelem);
   list_init(&(t->child));
-  t->waiting=false;
+  //t->waiting=false;
+  
+  sema_init(&(t->child_lock),0);
+  sema_init(&(t->mem_lock),0);
+  list_push_back(&(running_thread()->child),&(t->child_elem));
+
   int i;
   for(i=0;i<128;i++)
 	  t->FD[i]=NULL;

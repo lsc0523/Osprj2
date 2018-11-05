@@ -5,6 +5,10 @@
 #include "threads/thread.h"
 #include "threads/vaddr.h"
 #include "filesys/off_t.h"
+#include "threads/synch.h"
+
+struct lock sys_lock;
+
 static void syscall_handler (struct intr_frame *);
 struct file
 {
@@ -15,6 +19,7 @@ struct file
 	
 void syscall_init (void) 
 {
+	lock_init(&sys_lock);
 	intr_register_int (0x30, 3, INTR_ON, syscall_handler, "syscall");
 }
 void check_vaddr(void* esp)
@@ -39,6 +44,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 	//hex_dump(f->esp,f->esp,100,1);
 	int *temp=f->esp;
 	struct thread* now=thread_current();
+	//printf("syscall : %d\n",*(uint32_t *)(f->esp));
 	switch(*(uint32_t *)(f->esp))
 	{
 		case SYS_HALT:
@@ -157,21 +163,28 @@ int read(int fd, void* buffer, unsigned size)
 {
 	int i=0;
 	check_vaddr(buffer);
+	lock_acquire(&thr_lock);
 	if(fd==0){
 		for (i=0;i<size;i++){
 			if(*(uint8_t *)(buffer+i) = input_getc()){
 					break;
 			}		
 		}
-		if(i!=size)
+		if(i!=size){
+			lock_release(&thr_lock);
 			return -1;
+		}
 	}
 	else if(fd>2){	
 	struct thread* now_t=thread_current();
-	if(now_t->FD[fd]==NULL)
+	if(now_t->FD[fd]==NULL){
+		lock_release(&thr_lock);
 		return -1;
+	}
+	lock_release(&thr_lock);
 	return file_read(now_t->FD[fd],buffer,size);
 	}
+	lock_release(&thr_lock);
 	return i;
 
 }
@@ -180,21 +193,27 @@ int write(int fd,const void *buffer, unsigned size)
 {
 	//printf("fd is %d \nbuffer is [%s]\n",fd,buffer);
 	check_vaddr(buffer);
+	lock_acquire(&thr_lock);
 	struct thread* now_t=thread_current();
 	if(fd==1){
 		putbuf(buffer,size);
+		lock_release(&thr_lock);
 		return size;
 	}
 	else if(fd>2){
-		if(now_t->FD[fd]==NULL)
+		if(now_t->FD[fd]==NULL){
+			lock_release(&thr_lock);
 			exit(-1);
+		}
 		if(thread_current()->FD[fd]->deny_write){
 			file_deny_write(thread_current()->FD[fd]);
 		}
 		/*if(thread_current()->FD[fd]->deny_write)
 			printf("%d 는 deny당해버렸어요~~\n",fd);*/
+		lock_release(&thr_lock);
 		return file_write(now_t->FD[fd],buffer,size);
 	}
+	lock_release(&thr_lock);
 	return -1;
 }
 
@@ -244,9 +263,11 @@ int open(const char* file)
 	if(file==NULL)
 		exit(-1);
 	check_vaddr(file);
+	lock_acquire(&sys_lock);
 	struct file* ret=filesys_open(file);
 	if(ret==NULL){//could not open
 		//printf("없어ㅠㅠ\n");
+		lock_release(&sys_lock);
 		return -1;
 	}
 
@@ -262,9 +283,11 @@ int open(const char* file)
 				file_deny_write(ret);
 			}
 			now_t->FD[i]=ret;
+			lock_release(&sys_lock);
 			return i;
 		}
 	}
+	lock_release(&sys_lock);
 	return -1;
 
 }
