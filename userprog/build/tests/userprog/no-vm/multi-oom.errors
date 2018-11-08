@@ -1,8 +1,8 @@
-Use of literal control characters in variable names is deprecated at /sogang/under/cse20141560/pintos/src/utils/pintos line 914.
-Prototype mismatch: sub main::SIGVTALRM () vs none at /sogang/under/cse20141560/pintos/src/utils/pintos line 938.
-Constant subroutine SIGVTALRM redefined at /sogang/under/cse20141560/pintos/src/utils/pintos line 930.
-WARNING: Image format was not specified for '/tmp/NranqLpkwB.dsk' and probing guessed raw.
+Use of literal control characters in variable names is deprecated at /sogang/under/cse20141556/pintos/src/utils/pintos line 914.
+Prototype mismatch: sub main::SIGVTALRM () vs none at /sogang/under/cse20141556/pintos/src/utils/pintos line 938.
+Constant subroutine SIGVTALRM redefined at /sogang/under/cse20141556/pintos/src/utils/pintos line 930.
+WARNING: Image format was not specified for '/tmp/Yq4QE_LGDL.dsk' and probing guessed raw.
          Automatically detecting the format is dangerous for raw images, write operations on block 0 will be restricted.
          Specify the 'raw' format explicitly to remove the restrictions.
-Use of uninitialized value in numeric le (<=) at /sogang/under/cse20141560/pintos/src/utils/pintos line 833.
-qemu: terminating on signal 2 from pid 71751
+Use of uninitialized value in numeric le (<=) at /sogang/under/cse20141556/pintos/src/utils/pintos line 833.
+qemu: terminating on signal 2 from pid 108442

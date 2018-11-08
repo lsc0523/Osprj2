@@ -31,7 +31,7 @@ void check_vaddr(void* esp)
 	static void
 syscall_handler (struct intr_frame *f UNUSED) 
 {
-	//printf("syscall : %d\n",*(uint32_t *)(f->esp));
+	printf("syscall : %d\n",*(uint32_t *)(f->esp));
 /*	printf("address : %10X\n\n",f->esp);
 	printf("f->esp+4 is %d\n\n",*(uint32_t*)(f->esp +4));
 	printf("f->esp+8 is %d\n\n",*(uint32_t*)(f->esp+8));
@@ -52,7 +52,6 @@ syscall_handler (struct intr_frame *f UNUSED)
 			break;
 		case SYS_EXIT:
 			check_vaddr(f->esp+4);
-			now->parent->exit_flag=temp[1];
 			exit(*(uint32_t *)(f->esp +4));
 			break;
 		case SYS_EXEC://2
@@ -131,17 +130,19 @@ void halt(void)
 void exit(int status)
 {
 	struct thread* now=thread_current();
-	list_remove(&(now->child_elem));/*
+	//list_remove(&(now->child_elem));
+	/*
 	printf("%s: exit(%d)\n", thread_name(),status);
 	now->parent->child_status=THREAD_DYING;
 	thread_exit();*/
-	if(now->parent!=NULL)
+	/*if(now->parent!=NULL)
 	{
 		now->parent->child_status=THREAD_DYING;
 		now->parent->waiting=false;
 		now->parent->exit_flag=status;
-	}
+	}*/
 	printf("%s: exit(%d)\n",thread_name(),status);
+	now->exit_status=status;
 	thread_exit();
 
 }
@@ -162,8 +163,9 @@ int wait(pid_t pid)
 int read(int fd, void* buffer, unsigned size)
 {
 	int i=0;
+	int r;
 	check_vaddr(buffer);
-	lock_acquire(&thr_lock);
+	lock_acquire(&sys_lock);
 	if(fd==0){
 		for (i=0;i<size;i++){
 			if(*(uint8_t *)(buffer+i) = input_getc()){
@@ -171,20 +173,22 @@ int read(int fd, void* buffer, unsigned size)
 			}		
 		}
 		if(i!=size){
-			lock_release(&thr_lock);
+			lock_release(&sys_lock);
 			return -1;
 		}
 	}
 	else if(fd>2){	
-	struct thread* now_t=thread_current();
-	if(now_t->FD[fd]==NULL){
-		lock_release(&thr_lock);
-		return -1;
+		struct thread* now_t=thread_current();
+		if(now_t->FD[fd]==NULL){
+			lock_release(&sys_lock);
+			exit(-1);
+		}
+		
+		r= file_read(now_t->FD[fd],buffer,size);
+		lock_release(&sys_lock);
+		return r;
 	}
-	lock_release(&thr_lock);
-	return file_read(now_t->FD[fd],buffer,size);
-	}
-	lock_release(&thr_lock);
+	lock_release(&sys_lock);
 	return i;
 
 }
@@ -193,16 +197,16 @@ int write(int fd,const void *buffer, unsigned size)
 {
 	//printf("fd is %d \nbuffer is [%s]\n",fd,buffer);
 	check_vaddr(buffer);
-	lock_acquire(&thr_lock);
+	lock_acquire(&sys_lock);
 	struct thread* now_t=thread_current();
 	if(fd==1){
 		putbuf(buffer,size);
-		lock_release(&thr_lock);
+		lock_release(&sys_lock);
 		return size;
 	}
 	else if(fd>2){
 		if(now_t->FD[fd]==NULL){
-			lock_release(&thr_lock);
+			lock_release(&sys_lock);
 			exit(-1);
 		}
 		if(thread_current()->FD[fd]->deny_write){
@@ -210,10 +214,12 @@ int write(int fd,const void *buffer, unsigned size)
 		}
 		/*if(thread_current()->FD[fd]->deny_write)
 			printf("%d 는 deny당해버렸어요~~\n",fd);*/
-		lock_release(&thr_lock);
-		return file_write(now_t->FD[fd],buffer,size);
+		//lock_release(&sys_lock);
+		int ret= file_write(now_t->FD[fd],buffer,size);
+		lock_release(&sys_lock);
+		return ret;
 	}
-	lock_release(&thr_lock);
+	lock_release(&sys_lock);
 	return -1;
 }
 

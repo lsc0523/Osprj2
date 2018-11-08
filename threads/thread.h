@@ -108,11 +108,8 @@ struct thread
     /* Owned by thread.c. */
     unsigned magic;                     /* Detects stack overflow. */
     struct list child;
-    struct thread* parent;
     struct list_elem child_elem;
-    bool waiting;
-    int exit_flag;
-    int child_status;
+    int exit_status;
 	struct semaphore child_lock;
 	struct semaphore mem_lock;
 

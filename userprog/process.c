@@ -30,6 +30,7 @@ static bool load (const char *cmdline, void (**eip) (void), void **esp);
 tid_t
 process_execute (const char *file_name) 
 {
+	//lock_acquire(&thr_lock);
   char *fn_copy;
   tid_t tid;
 
@@ -54,11 +55,12 @@ process_execute (const char *file_name)
   {
 	  return -1;
   }
-
+  //lock_release(&thr_lock);
   /* Create a new thread to execute FILE_NAME. */
   tid = thread_create (copy, PRI_DEFAULT, start_process, fn_copy);
   if (tid == TID_ERROR)
     palloc_free_page (fn_copy); 
+  //lock_release(&thr_lock);
   return tid;
 }
 
@@ -219,93 +221,21 @@ process_wait (tid_t child_tid UNUSED)
 	c=list_entry(elem,struct thread,child_elem);*/
 	//busy_wait(1000000000);
 	//list_remove(&(c->child_elem));
-	struct thread* child_thr=NULL;
-	struct thread* cur_thr=thread_current();
-	int flag=0;
-	struct list_elem* elem;
+	struct list_elem* e;
+	struct thread* t=NULL;
+	int exit_status;
 
-	//printf("process_wait 시작\n");
-
-	if((child_tid==TID_ERROR))
-		return -1;
-
-	/*if(cur_thr->child_status == THREAD_RUNNING){
-		printf("block하는 부분\n");
-		printf("cur : %d\n",cur_thr->tid);
-		printf("child : %d\n",child_tid);
-		intr_set_level(INTR_OFF);
-		thread_block();
-	}*/
-
-	for(elem = list_begin(&(cur_thr->child)); elem != list_end(&(cur_thr->child));elem = list_next(elem))
-	{
-		child_thr = list_entry(elem,struct thread,child_elem);
-		//printf("check\n");
-		//printf("cur_thr status: %d\n",cur_thr->child_status);
-		//printf("child_thr status: %d\n",child_thr->child_status);
-		if(strcmp(cur_thr->name,"wait-twice")==0 && killed==1)
-			return -1;
-		//printf("반복문안\n");
-		//child_thr = list_entry(elem,struct thread,child_elem);
-		//printf("check\n");
-		if(child_tid== child_thr->tid){
-			//printf("check2\n");
-			sema_down(&(child_thr->child_lock));
-			//printf("check3\n");
-
-			flag = cur_thr->exit_flag;
-			list_remove(&(child_thr->child_elem));
-			killed++;
-			//printf("check4\n");
-			sema_up(&(child_thr->mem_lock));
-			//printf("check5\n");
-			//printf("wait : child 종료%d\n",flag);
-			return flag;
+	for(e=list_begin(&(thread_current()->child));e!=list_end(&(thread_current()->child));e=list_next(e)){
+		t=list_entry(e,struct thread,child_elem);
+		if(child_tid==t->tid){
+			sema_down(&(t->child_lock));
+			exit_status=t->exit_status;
+			list_remove(&(t->child_elem));
+			sema_up(&(t->mem_lock));
+			return exit_status;
 		}
-		//printf("check5\n");
-	}
-	//printf("wait : 커널에의해 종료\n");
-	return -1;
-	/*if((child_tid == TID_ERROR) || (cur_thr->waiting ==true))
-		return -1;*/
-	/*
-	if(child_tid == TID_ERROR)
-		return -1;
-	if(cur_thr->waiting==true)
-		return -1;
-			
-	if(cur_thr->child_status == THREAD_RUNNING && cur_thr->waiting == false){
-		intr_set_level(INTR_OFF);
-		cur_thr->waiting = true;
-		thread_block();
-	}
-
-	for(elem = list_begin(&(cur_thr->child));elem!=list_end(&(cur_thr->child));elem=list_next(elem)){
-		child_thr = list_entry(elem,struct thread,child_elem);
-		if(child_thr->tid == child_tid){
-			flag = 1;
-			break;
-		}
-	}
-	while(1){
-		if(cur_thr->child_status == THREAD_DYING){
-	
-			killed++;
-			twice++;
-			if(twice == 2 && strcmp("wait-twice",cur_thr->name)==0)
-				return -1;
-			else if(killed == 1 && strcmp("wait-killed",cur_thr->name)==0)
-				return -1;
-			return cur_thr->exit_flag;
-		}
-		if(flag == 0)
-		       	return -1;
-		if(list_empty(&cur_thr->child)==1)
-			return -1;
-
 	}
 	return -1;
-	*/
 }
 
 /* Free the current process's resources. */
@@ -438,6 +368,9 @@ load (const char *file_name, void (**eip) (void), void **esp)
   off_t file_ofset;
   bool success = false;
   int i;
+  /*struct lock load_lock;
+  lock_init(&load_lock);
+  lock_acquire(&load_lock);*/
   /* Allocate and activate page directory. */
   t->pagedir = pagedir_create ();
   if (t->pagedir == NULL)
@@ -531,6 +464,7 @@ load (const char *file_name, void (**eip) (void), void **esp)
  done:
   /* We arrive here whether the load is successful or not. */
   file_close (file);
+  //lock_release(&load_lock);
   return success;
 }
 

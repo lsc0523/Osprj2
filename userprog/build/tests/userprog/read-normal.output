@@ -1,13 +1,13 @@
 Copying tests/userprog/read-normal to scratch partition...
 Copying ../../tests/userprog/sample.txt to scratch partition...
-qemu -hda /tmp/UIQ_CpkxSb.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/DH_ezn76Zl.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run read-normal
 Pintos booting with 3,968 kB RAM...
 367 pages available in kernel pool.
 367 pages available in user pool.
-Calibrating timer...  209,715,200 loops/s.
+Calibrating timer...  314,163,200 loops/s.
 hda: 5,040 sectors (2 MB), model "QM00001", serial "QEMU HARDDISK"
 hda1: 147 sectors (73 kB), Pintos OS kernel (20)
 hda2: 4,096 sectors (2 MB), Pintos file system (21)
@@ -28,8 +28,8 @@ Executing 'read-normal':
 (read-normal) end
 read-normal: exit(0)
 Execution of 'read-normal' complete.
-Timer: 89 ticks
-Thread: 2 idle ticks, 85 kernel ticks, 2 user ticks
+Timer: 77 ticks
+Thread: 0 idle ticks, 76 kernel ticks, 1 user ticks
 hda2 (filesys): 94 reads, 228 writes
 hda3 (scratch): 110 reads, 2 writes
 Console: 1074 characters output

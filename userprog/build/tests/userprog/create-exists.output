@@ -1,12 +1,12 @@
 Copying tests/userprog/create-exists to scratch partition...
-qemu -hda /tmp/N94vSdjbOi.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/P5MgIn85l1.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run create-exists
 Pintos booting with 3,968 kB RAM...
 367 pages available in kernel pool.
 367 pages available in user pool.
-Calibrating timer...  209,510,400 loops/s.
+Calibrating timer...  419,020,800 loops/s.
 hda: 5,040 sectors (2 MB), model "QM00001", serial "QEMU HARDDISK"
 hda1: 147 sectors (73 kB), Pintos OS kernel (20)
 hda2: 4,096 sectors (2 MB), Pintos file system (21)

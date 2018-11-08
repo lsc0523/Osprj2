@@ -1,12 +1,12 @@
 Copying tests/userprog/read-bad-fd to scratch partition...
-qemu -hda /tmp/DJ86jaLO4E.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/Nc7ncKlIfM.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run read-bad-fd
 Pintos booting with 3,968 kB RAM...
 367 pages available in kernel pool.
 367 pages available in user pool.
-Calibrating timer...  212,582,400 loops/s.
+Calibrating timer...  314,163,200 loops/s.
 hda: 5,040 sectors (2 MB), model "QM00001", serial "QEMU HARDDISK"
 hda1: 147 sectors (73 kB), Pintos OS kernel (20)
 hda2: 4,096 sectors (2 MB), Pintos file system (21)
@@ -22,8 +22,8 @@ Executing 'read-bad-fd':
 (read-bad-fd) begin
 read-bad-fd: exit(-1)
 Execution of 'read-bad-fd' complete.
-Timer: 86 ticks
-Thread: 1 idle ticks, 85 kernel ticks, 1 user ticks
+Timer: 76 ticks
+Thread: 2 idle ticks, 74 kernel ticks, 0 user ticks
 hda2 (filesys): 65 reads, 222 writes
 hda3 (scratch): 108 reads, 2 writes
 Console: 882 characters output
