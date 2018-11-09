@@ -51,11 +51,13 @@ process_execute (const char *file_name)
 	  copy[i]=file_name[i];
   }
   copy[i]='\0';
+  lock_acquire(&thr_lock);
   if(filesys_open(copy)==NULL)
   {
+	  lock_release(&thr_lock);
 	  return -1;
   }
-  //lock_release(&thr_lock);
+  lock_release(&thr_lock);
   /* Create a new thread to execute FILE_NAME. */
   tid = thread_create (copy, PRI_DEFAULT, start_process, fn_copy);
   if (tid == TID_ERROR)

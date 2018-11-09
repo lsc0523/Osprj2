@@ -1,5 +1,5 @@
 Copying tests/userprog/bad-jump to scratch partition...
-qemu -hda /tmp/f69tv8guf7.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/3MoHQqhZV1.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run bad-jump

@@ -1,5 +1,5 @@
 Copying tests/userprog/args-single to scratch partition...
-qemu -hda /tmp/_0xo4AoiEd.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/yEJSMGCXV0.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run 'args-single onearg'

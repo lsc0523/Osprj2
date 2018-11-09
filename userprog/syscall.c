@@ -31,7 +31,7 @@ void check_vaddr(void* esp)
 	static void
 syscall_handler (struct intr_frame *f UNUSED) 
 {
-	printf("syscall : %d\n",*(uint32_t *)(f->esp));
+//	printf("syscall : %d\n",*(uint32_t *)(f->esp));
 /*	printf("address : %10X\n\n",f->esp);
 	printf("f->esp+4 is %d\n\n",*(uint32_t*)(f->esp +4));
 	printf("f->esp+8 is %d\n\n",*(uint32_t*)(f->esp+8));
@@ -73,7 +73,9 @@ syscall_handler (struct intr_frame *f UNUSED)
 			break;
 		case SYS_OPEN:
 			check_vaddr(f->esp+4);
+			lock_acquire(&thr_lock);
 			f->eax=open((const char*)*(uint32_t*)(f->esp+4));
+			lock_release(&thr_lock);
 			break;
 		case SYS_FILESIZE:
 			check_vaddr(f->esp+4);
@@ -100,7 +102,7 @@ syscall_handler (struct intr_frame *f UNUSED)
 			check_vaddr(f->esp+4);
 			f->eax=tell((int)*(uint32_t*)(f->esp+4));
 			break;
-		case SYS_CLOSE:
+		case SYS_CLOSE://12
 			check_vaddr(f->esp+4);
 			close((int)*(uint32_t*)(f->esp+4));
 			break;
@@ -271,9 +273,10 @@ int open(const char* file)
 	check_vaddr(file);
 	lock_acquire(&sys_lock);
 	struct file* ret=filesys_open(file);
+	lock_release(&sys_lock);
 	if(ret==NULL){//could not open
 		//printf("없어ㅠㅠ\n");
-		lock_release(&sys_lock);
+		//lock_release(&sys_lock);
 		return -1;
 	}
 
@@ -289,11 +292,11 @@ int open(const char* file)
 				file_deny_write(ret);
 			}
 			now_t->FD[i]=ret;
-			lock_release(&sys_lock);
+			//lock_release(&sys_lock);
 			return i;
 		}
 	}
-	lock_release(&sys_lock);
+	//lock_release(&sys_lock);
 	return -1;
 
 }

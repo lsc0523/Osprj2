@@ -1,5 +1,5 @@
 Copying tests/userprog/close-stdin to scratch partition...
-qemu -hda /tmp/WJtXvg9AKi.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/2ZjyNrKMR_.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run close-stdin
@@ -23,7 +23,7 @@ Executing 'close-stdin':
 close-stdin: exit(-1)
 Execution of 'close-stdin' complete.
 Timer: 76 ticks
-Thread: 2 idle ticks, 74 kernel ticks, 0 user ticks
+Thread: 1 idle ticks, 74 kernel ticks, 1 user ticks
 hda2 (filesys): 63 reads, 220 writes
 hda3 (scratch): 107 reads, 2 writes
 Console: 882 characters output

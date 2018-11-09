@@ -1,5 +1,5 @@
 Copying tests/userprog/open-null to scratch partition...
-qemu -hda /tmp/dQDYimSLiI.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/uUIIcPsRuv.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run open-null
@@ -23,7 +23,7 @@ Executing 'open-null':
 open-null: exit(-1)
 Execution of 'open-null' complete.
 Timer: 76 ticks
-Thread: 1 idle ticks, 75 kernel ticks, 0 user ticks
+Thread: 0 idle ticks, 76 kernel ticks, 0 user ticks
 hda2 (filesys): 63 reads, 220 writes
 hda3 (scratch): 107 reads, 2 writes
 Console: 870 characters output
